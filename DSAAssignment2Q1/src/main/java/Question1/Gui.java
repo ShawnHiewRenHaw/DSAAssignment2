@@ -47,8 +47,6 @@ public class Gui {
         //Setting up panel
         panel = new JPanel();
         panel.setBackground(Color.GRAY);
-        GridBagLayout layout = new GridBagLayout();
-        panel.setLayout(layout);
 
         //Load File Button
         loadButton = new JButton("Load");

@@ -16,6 +16,7 @@ import javax.swing.JFrame;
 import static javax.swing.JFrame.EXIT_ON_CLOSE;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -25,7 +26,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  * @author shawn
  */
 public class Gui {
-
+    
     JFrame f;
     JPanel panel;
     JButton loadButton;
@@ -34,11 +35,12 @@ public class Gui {
     JButton searchStudent;
     JTextField jTFattachString;
     FileReaderWriter fileRW;
-
+    BinaryTree bTree;
+    
     public Gui() {
         //Setting up Frame
         f = new JFrame();
-        f.setSize(800, 800);
+        f.setSize(500, 200);
         f.setLocation(300, 100);
         f.setBackground(Color.GRAY);
         f.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -56,10 +58,29 @@ public class Gui {
                 FileNameExtensionFilter filter = new FileNameExtensionFilter("", "txt");
                 txtFileChooser.setFileFilter(filter);
                 int stateTxtFileChooser = txtFileChooser.showOpenDialog(null);
-
+                
                 if (stateTxtFileChooser == JFileChooser.APPROVE_OPTION) {
                     String fileName = txtFileChooser.getSelectedFile().getPath();
                     fileRW.readFile(fileName);
+                    int i = 0;
+                    String newStudentString = "";
+                    bTree = new BinaryTree(0, null);
+                    while (fileRW.lineData[i] != null) {
+                        System.out.println(fileRW.lineData[i]);
+                        newStudentString = fileRW.lineData[i];
+                        String[] split = newStudentString.split(", ");
+                        Student newStudent = new Student(split[0], Integer.parseInt(split[1]));
+                        newStudent.setKey(split[0]);
+                        Node newNode = new Node(newStudent);
+                        if (bTree.getRoot() == null) {
+                            bTree.setRoot(newNode);
+                            System.out.println(newNode.getData().toString());
+                        } else {
+                            bTree.add(newNode);
+                            System.out.println(newNode.getData().toString());
+                        }
+                        ++i;
+                    }
                 }
             }
         });
@@ -72,7 +93,6 @@ public class Gui {
                 for (int i = 0; i < fileRW.lineNumber; i++) {
                     outputFileContent += (fileRW.lineData[i] + " " + jTFattachString.getText() + "\n");
                 }
-
                 JFileChooser txtFileChooser = new JFileChooser(new File("output.txt"));
                 FileNameExtensionFilter filter = new FileNameExtensionFilter("", "txt");
                 txtFileChooser.setFileFilter(filter);
@@ -92,14 +112,26 @@ public class Gui {
                 String messageInput;
                 messageInput = (String) JOptionPane.showInputDialog(null, "Sorting Order", "Sorting Order", JOptionPane.PLAIN_MESSAGE, null, sortingOrder, null);
                 if (messageInput.equalsIgnoreCase("By Name Ascending")) {
-                    jTFattachString.setText(messageInput);
+                    System.out.println("Name Ascend");
+                    bTree.traversal();
+                } else if (messageInput.equalsIgnoreCase("By Name Descending")) {
+                    System.out.println("Name Descend");
+                } else if (messageInput.equalsIgnoreCase("By Marks Ascending")) {
+                    System.out.println("Marks Ascend");
+                } else if (messageInput.equalsIgnoreCase("By Marks Descending")) {
+                    System.out.println("Marks Descend");
                 }
             }
         });
 
         //Student Search
         searchStudent = new JButton("Search");
-
+        searchStudent.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                
+            }
+        });
+        
         panel.add(loadButton);
         panel.add(saveButton);
         panel.add(sortOrder);

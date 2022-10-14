@@ -2,8 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Question1;
+package Question3;
 
+import Question1.*;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.GridBagLayout;
@@ -26,19 +27,15 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  * @author shawn
  */
 public class Gui {
-
+    
     JFrame f;
     JPanel panel;
     JButton loadButton;
-    JButton saveButton;
     JButton sortOrder;
-    JButton searchStudent;
     JTextField jTFattachString;
     FileReaderWriter fileRW;
     BinaryTree bTree;
-    JTextField searchBar;
-    JTextArea searchResult;
-
+    
     public Gui() {
         //Setting up Frame
         f = new JFrame();
@@ -60,7 +57,7 @@ public class Gui {
                 FileNameExtensionFilter filter = new FileNameExtensionFilter("", "txt");
                 txtFileChooser.setFileFilter(filter);
                 int stateTxtFileChooser = txtFileChooser.showOpenDialog(null);
-
+                
                 if (stateTxtFileChooser == JFileChooser.APPROVE_OPTION) {
                     String fileName = txtFileChooser.getSelectedFile().getPath();
                     fileRW.readFile(fileName);
@@ -87,25 +84,6 @@ public class Gui {
             }
         });
 
-        //Save File Button
-        saveButton = new JButton("Save");
-        saveButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                String outputFileContent = "";
-                for (int i = 0; i < fileRW.lineNumber; i++) {
-                    outputFileContent += (fileRW.lineData[i] + " " + jTFattachString.getText() + "\n");
-                }
-                JFileChooser txtFileChooser = new JFileChooser(new File("output.txt"));
-                FileNameExtensionFilter filter = new FileNameExtensionFilter("", "txt");
-                txtFileChooser.setFileFilter(filter);
-                int stateTxtFileChooser = txtFileChooser.showSaveDialog(null);
-                if (stateTxtFileChooser == JFileChooser.APPROVE_OPTION) {
-                    String fileName = txtFileChooser.getSelectedFile().getPath();
-                    fileRW.writeFile(fileName, outputFileContent);
-                }
-            }
-        });
-
         //Sorting Order of Displayed results
         sortOrder = new JButton("Sorting Order");
         sortOrder.addActionListener(new ActionListener() {
@@ -118,7 +96,6 @@ public class Gui {
                     bTree.traversal();
                 } else if (messageInput.equalsIgnoreCase("By Name Descending")) {
                     System.out.println("Name Descend");
-                    bTree.reverseOrder();
                 } else if (messageInput.equalsIgnoreCase("By Marks Ascending")) {
                     System.out.println("Marks Ascend");
                 } else if (messageInput.equalsIgnoreCase("By Marks Descending")) {
@@ -126,26 +103,9 @@ public class Gui {
                 }
             }
         });
-        //Student Search Bar
-        searchBar = new JTextField();
-
-        //Student Search Result
-        searchResult = new JTextArea();
-
-        //Student Search Button
-        searchStudent = new JButton("Search");
-        searchStudent.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-
-            }
-        });
 
         panel.add(loadButton);
-        panel.add(saveButton);
         panel.add(sortOrder);
-        panel.add(searchStudent);
-        panel.add(searchBar);
-        panel.add(searchResult);
         f.add(panel);
         f.setVisible(true);
         fileRW = new FileReaderWriter();

@@ -75,14 +75,19 @@ public class BinaryTree<E extends Comparable> {
 
     //Reverse order
     public void reverseOrder() {
+        reverseOrder(root);
+    }
+
+    //Reverse order recursion 
+    public void reverseOrder(Node root) {
         //If right is not null continue going down right
         if (root.getRight() != null) {
-            traversal(root.getRight());
+            reverseOrder(root.getRight());
         }
-        System.out.println(root);
+        System.out.println(root.getData().toString());
         //If left is not null continue going down left
         if (root.getLeft() != null) {
-            traversal(root.getLeft());
+            reverseOrder(root.getLeft());
         }
     }
 
@@ -91,8 +96,6 @@ public class BinaryTree<E extends Comparable> {
         //Calls recursion traversal method that uses root
         traversal(root);
     }
-
-    int i = 0;
 
     //Recursion traversal method
     public void traversal(Node root) {

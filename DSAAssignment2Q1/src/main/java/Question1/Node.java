@@ -4,7 +4,6 @@ package Question1;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-
 /**
  *
  * @author shawn
@@ -56,5 +55,10 @@ public class Node<E extends Comparable> implements Comparable<Node> {
             return node.data.compareTo(this.data);
         }
         return 0;
+    }
+
+    @Override
+    public String toString() {
+        return data.toString();
     }
 }

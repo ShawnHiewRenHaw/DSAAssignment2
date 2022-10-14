@@ -53,6 +53,6 @@ public class Student<E extends Comparable> implements Comparable<Student> {
 
     @Override
     public String toString() {
-        return "Student name: " + this.name + " Mark: " + this.mark + "\n\n";
+        return "Student name: " + this.name + " Mark: " + this.mark + "\n";
     }
 }

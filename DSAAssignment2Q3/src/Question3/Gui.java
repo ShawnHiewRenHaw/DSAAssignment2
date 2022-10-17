@@ -4,10 +4,7 @@
  */
 package Question3;
 
-import Question1.*;
 import java.awt.Color;
-import java.awt.FlowLayout;
-import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -27,15 +24,14 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  * @author shawn
  */
 public class Gui {
-    
+
     JFrame f;
     JPanel panel;
     JButton loadButton;
     JButton sortOrder;
     JTextField jTFattachString;
     FileReaderWriter fileRW;
-    BinaryTree bTree;
-    
+
     public Gui() {
         //Setting up Frame
         f = new JFrame();
@@ -57,29 +53,10 @@ public class Gui {
                 FileNameExtensionFilter filter = new FileNameExtensionFilter("", "txt");
                 txtFileChooser.setFileFilter(filter);
                 int stateTxtFileChooser = txtFileChooser.showOpenDialog(null);
-                
+
                 if (stateTxtFileChooser == JFileChooser.APPROVE_OPTION) {
                     String fileName = txtFileChooser.getSelectedFile().getPath();
                     fileRW.readFile(fileName);
-                    int i = 0;
-                    String newStudentString = "";
-                    bTree = new BinaryTree(0, null);
-                    while (fileRW.lineData[i] != null) {
-                        System.out.println(fileRW.lineData[i]);
-                        newStudentString = fileRW.lineData[i];
-                        String[] split = newStudentString.split(", ");
-                        Student newStudent = new Student(split[0], Integer.parseInt(split[1]));
-                        newStudent.setKey(split[0]);
-                        Node newNode = new Node(newStudent);
-                        if (bTree.getRoot() == null) {
-                            bTree.setRoot(newNode);
-                            System.out.println(newNode.getData().toString());
-                        } else {
-                            bTree.add(newNode);
-                            System.out.println(newNode.getData().toString());
-                        }
-                        ++i;
-                    }
                 }
             }
         });
@@ -91,16 +68,7 @@ public class Gui {
                 String[] sortingOrder = new String("By Name Ascending, By Name Descending, By Marks Ascending, By Marks Descending").split(", ");
                 String messageInput;
                 messageInput = (String) JOptionPane.showInputDialog(null, "Sorting Order", "Sorting Order", JOptionPane.PLAIN_MESSAGE, null, sortingOrder, null);
-                if (messageInput.equalsIgnoreCase("By Name Ascending")) {
-                    System.out.println("Name Ascend");
-                    bTree.traversal();
-                } else if (messageInput.equalsIgnoreCase("By Name Descending")) {
-                    System.out.println("Name Descend");
-                } else if (messageInput.equalsIgnoreCase("By Marks Ascending")) {
-                    System.out.println("Marks Ascend");
-                } else if (messageInput.equalsIgnoreCase("By Marks Descending")) {
-                    System.out.println("Marks Descend");
-                }
+
             }
         });
 
